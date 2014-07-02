@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<billing>
+  <item>
+    <id>1</id>
+    <customer>Vandelay Industries</customer>
+    <type>Development</type>
+    <date>4/5/2011</date>
+    <description>Update jQuery animation on Intranet homepage</description>
+    <hours>2</hours>
+  </item>
+  <item>
+    <id>2</id>
+    <customer>Dunder Mifflin</customer>
+    <type>Meeting</type>
+    <date>4/5/2011</date>
+    <description>Status Meeting with Michael Scott over new Invoice format</description>
+    <hours>1</hours>
+  </item>
+  <item>
+    <id>3</id>
+    <customer>Dunder Mifflin</customer>
+    <type>Testing</type>
+    <date>4/7/2011</date>
+    <description>Unit Testing MVC Sales website</description>
+    <hours>2</hours>
+  </item>
+  <item>
+    <id>4</id>
+    <customer>Strickland Propane</customer>
+    <type>Documentation</type>
+    <date>4/8/2011</date>
+    <description>Document workflow with Propane sales website</description>
+    <hours>4</hours>
+  </item>
+</billing>

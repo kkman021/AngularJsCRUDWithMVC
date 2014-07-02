@@ -1,0 +1,31 @@
+﻿@model CRUD_XML_MVC.Models.Billing
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Billing</legend>
+
+    <div class="display-label">Customer</div>
+    <div class="display-field">@Model.Customer</div>
+
+    <div class="display-label">Type</div>
+    <div class="display-field">@Model.Type</div>
+
+    <div class="display-label">Date</div>
+    <div class="display-field">@String.Format("{0:MM/dd/yyyy}", Model.Date)</div>
+
+    <div class="display-label">Description</div>
+    <div class="display-field">@Model.Description</div>
+
+    <div class="display-label">Hours</div>
+    <div class="display-field">@Model.Hours</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
