@@ -1,0 +1,54 @@
+﻿<!doctype html>
+<html ng-app="BillingApp">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular.min.js"></script>
+	<script src="Scripts/Billing/Billing.js"></script>
+</head>
+<body >
+	<div ng-controller="BillingCtrl">		
+		<h3>共有 {{ friends.length }} 位使用者</h3>		
+		<table>
+		    <tr>
+		        <th></th>
+		        <th>
+		            Customer
+		        </th>
+		        <th>
+		            Type
+		        </th>
+		        <th>
+		            Date
+		        </th>
+		        <th>
+		            Description
+		        </th>
+		        <th>
+		            Hours
+		        </th>
+		    </tr>
+		    <tr ng-repeat="Billing in Billings">
+		    	<td>
+		    	</td>
+		    	<td>
+		    		<span ng-bind="Billing.Customer"></span>
+		    	</td>
+		    	<td>
+		    		<span ng-bind="Billing.Type"></span>
+		    	</td>
+		    	<td>
+		    		<span ng-bind="Billing.Date"></span>
+		    	</td>
+		    	<td>
+		    		<span ng-bind="Billing.Description"></span>
+		    	</td>
+		    	<td>
+		    		<span ng-bind="Billing.Hours"></span>
+		    	</td>
+		    </tr>
+	    </table>		
+	</div>
+</body>
+</html>

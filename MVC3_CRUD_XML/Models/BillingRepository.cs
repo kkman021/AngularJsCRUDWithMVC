@@ -19,7 +19,7 @@ namespace CRUD_XML_MVC.Models
             billingData = XDocument.Load(HttpContext.Current.Server.MapPath("~/App_Data/Billings.xml"));
             var billings = from billing in billingData.Descendants("item")
                             select new Billing((int)billing.Element("id"), billing.Element("customer").Value,
-                            billing.Element("type").Value, (DateTime)billing.Element("date"),
+                            billing.Element("JobType").Value, (DateTime)billing.Element("date"),
                             billing.Element("description").Value, (int)billing.Element("hours"));
             allBillings.AddRange(billings.ToList<Billing>());
         }
@@ -41,7 +41,7 @@ namespace CRUD_XML_MVC.Models
             billing.ID = (int)(from b in billingData.Descendants("item") orderby (int)b.Element("id") descending select (int)b.Element("id")).FirstOrDefault() + 1;
 
             billingData.Root.Add(new XElement("item", new XElement("id", billing.ID), new XElement("customer", billing.Customer),
-                new XElement("type", billing.Type), new XElement("date", billing.Date.ToShortDateString()), new XElement("description", billing.Description), 
+                new XElement("JobType", billing.JobType), new XElement("date", billing.Date.ToShortDateString()), new XElement("description", billing.Description), 
                 new XElement("hours", billing.Hours)));
 
             billingData.Save(HttpContext.Current.Server.MapPath("~/App_Data/Billings.xml"));
@@ -61,7 +61,7 @@ namespace CRUD_XML_MVC.Models
             XElement node = billingData.Root.Elements("item").Where(i => (int)i.Element("id") == billing.ID).FirstOrDefault();
 
             node.SetElementValue("customer", billing.Customer);
-            node.SetElementValue("type", billing.Type);
+            node.SetElementValue("JobType", billing.JobType);
             node.SetElementValue("date", billing.Date.ToShortDateString());
             node.SetElementValue("description", billing.Description);
             node.SetElementValue("hours", billing.Hours);

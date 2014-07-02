@@ -89,7 +89,9 @@
     <Content Include="App_Data\Billings.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="BillingCRUD.htm" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\Billing\Billing.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

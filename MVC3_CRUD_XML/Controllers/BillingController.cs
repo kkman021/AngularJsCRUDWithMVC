@@ -33,6 +33,37 @@ namespace CRUD_XML_MVC.Controllers
             return Json(_repository.GetBillings(),JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult GetDetails(int id)
+        {
+            return Json(_repository.GetBillingByID(id), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public string ListJobType()
+        {
+            return "[{\"name\": \"醫生\",\"id\": 1},{\"name\": \"老師\",\"id\": 2},{\"name\": \"工程師\",\"id\": 3},{\"name\": \"藥師\",\"id\": 4},{\"name\": \"設計師\",\"id\": 5}]";
+        }
+
+        [HttpPost]
+        public string Add(Billing billing)
+        {
+            _repository.InsertBilling(billing);
+            return "OK";
+        }
+
+        [HttpPost]
+        public string EditMode(Billing billing)
+        {
+            try
+            {
+                _repository.EditBilling(billing);
+                return "OK";
+            }
+            catch {
+                return "Fail";
+            }
+        }
 
         public ActionResult Details(int id)
         {            
@@ -48,7 +79,9 @@ namespace CRUD_XML_MVC.Controllers
         {
             ViewBag.TypeList = typeList;
             return View();
-        } 
+        }
+
+       
 
 
         [HttpPost]

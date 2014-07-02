@@ -12,17 +12,17 @@ namespace CRUD_XML_MVC.Models
         {
             this.ID = 0;
             this.Customer = null;
-            this.Type = null;
+            this.JobType = null;
             this.Date = DateTime.Now;
             this.Description = null;
             this.Hours = 0;
         }
 
-        public Billing(int id, string customer, string type, DateTime date, string description, int hours)
+        public Billing(int id, string customer, string JobType, DateTime date, string description, int hours)
         {
             this.ID = id;
             this.Customer = customer;
-            this.Type = type;
+            this.JobType = JobType;
             this.Date = date;
             this.Description = description;
             this.Hours = hours;
@@ -32,7 +32,7 @@ namespace CRUD_XML_MVC.Models
         [Required(ErrorMessage = "Customer is required")]
         public string Customer { get; set; }
         [Required(ErrorMessage = "Type is required")]
-        public string Type { get; set; }
+        public string JobType { get; set; }
         [Required(ErrorMessage = "Date is required")]
         public DateTime Date { get; set; }
         [Required(ErrorMessage = "Description is required")]

@@ -1,17 +1,17 @@
 ﻿@model IEnumerable<CRUD_XML_MVC.Models.Billing>
-
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-
+<script type="text/javascript" src="@Url.Content("~/Scripts/Billing/Billing.js")"></script>
+<h2>
+    Index</h2>
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table>
+<table ng-app="BillingApp" ng-controller="BillingCtrl">
     <tr>
-        <th></th>
+        <th>
+        </th>
         <th>
             Customer
         </th>
@@ -28,31 +28,25 @@
             Hours
         </th>
     </tr>
-
-@foreach (var item in Model) {
-    <tr>
+    <tr ng-repeat="Billing in Billings">
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            <a ng-click="Billing.IsEdit=true">Edit</a>|<a href="/Billing/Details/{{Billing.ID}}">Details</a>|<a
+                href="/Billing/Delete/{{Billing.ID}}">Delete</a>
         </td>
         <td>
-            @item.Customer
+            <span ng-bind="Billing.Customer"></span>
         </td>
         <td>
-            @item.Type
+            <span ng-repeat="Job in JobTypes | filter: {id:Billing.JobType}">{{Job.name}}</span>
         </td>
         <td>
-            @String.Format("{0:MM/dd/yyyy}", item.Date)
+            <span ng-bind="Billing.Date"></span>
         </td>
         <td>
-            @item.Description
+            <span ng-bind="Billing.Description"></span>
         </td>
         <td>
-            @item.Hours
+            <span ng-bind="Billing.Hours"></span>
         </td>
     </tr>
-}
-
 </table>
-
