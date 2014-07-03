@@ -18,7 +18,7 @@
         @Html.LabelFor(model => model.JobType)
     </div>
     <div class="editor-field">
-        <select ng-model="IJobType" ng-options="Job.id as Job.name for Job in JobTypes">
+        <select ng-model="IJobType" ng-options="Job.name for Job in JobTypes">
             <option value="">--請選擇--</option>
         </select>
     </div>

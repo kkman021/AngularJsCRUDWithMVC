@@ -8,45 +8,84 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table ng-app="BillingApp" ng-controller="BillingCtrl">
-    <tr>
-        <th>
-        </th>
-        <th>
-            Customer
-        </th>
-        <th>
-            Type
-        </th>
-        <th>
-            Date
-        </th>
-        <th>
-            Description
-        </th>
-        <th>
-            Hours
-        </th>
-    </tr>
-    <tr ng-repeat="Billing in Billings">
-        <td>
-            <a ng-click="Billing.IsEdit=true">Edit</a>|<a href="/Billing/Details/{{Billing.ID}}">Details</a>|<a
-                href="/Billing/Delete/{{Billing.ID}}">Delete</a>
-        </td>
-        <td>
-            <span ng-bind="Billing.Customer"></span>
-        </td>
-        <td>
-            <span ng-repeat="Job in JobTypes | filter: {id:Billing.JobType}">{{Job.name}}</span>
-        </td>
-        <td>
-            <span ng-bind="Billing.Date"></span>
-        </td>
-        <td>
-            <span ng-bind="Billing.Description"></span>
-        </td>
-        <td>
-            <span ng-bind="Billing.Hours"></span>
-        </td>
-    </tr>
-</table>
+<div ng-app="BillingApp" ng-controller="BillingCtrl" ng-switch="ShowMode" ng-init="InitData()">
+    <div ng-switch-when="list">
+        <table>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    Customer
+                </th>
+                <th>
+                    JobType
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Hours
+                </th>
+            </tr>
+            <tr ng-repeat="Billing in Billings">
+                <td>
+                    <a ng-click="Billing.IsEdit=true">Edit</a>|
+                    <a ng-click="showDetail(Billing)">
+                        Details</a>|<a href="/Billing/Delete/{{Billing.ID}}">Delete</a>
+                </td>
+                <td>
+                    <span ng-bind="Billing.Customer"></span>
+                </td>
+                <td>
+                    <span ng-repeat="Job in JobTypes | filter: {id:Billing.JobType}" ng-bind="Job.name">
+                    </span>
+                </td>
+                <td>
+                    <span ng-bind="Billing.Date"></span>
+                </td>
+                <td>
+                    <span ng-bind="Billing.Description"></span>
+                </td>
+                <td>
+                    <span ng-bind="Billing.Hours"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div ng-switch-when="details">
+        <fieldset>
+            <legend>Billing</legend>
+            <div class="display-label">
+                Customer</div>
+            <div class="display-field">
+                <span ng-bind="BillingDetail.ID"></span>
+            </div>
+            <div class="display-label">
+                JobType</div>
+            <div class="display-field">
+                <span ng-repeat="Job in JobTypes | filter: {id:BillingDetail.JobType}" ng-bind="Job.name">
+                </span>
+            </div>
+            <div class="display-label">
+                Date</div>
+            <div class="display-field">
+                <span ng-bind="BillingDetail.Date"></span>
+            </div>
+            <div class="display-label">
+                Description</div>
+            <div class="display-field">
+                <span ng-bind="BillingDetail.Description"></span>
+            </div>
+            <div class="display-label">
+                Hours</div>
+            <div class="display-field">
+                <span ng-bind="BillingDetail.Hours"></span>
+            </div>
+        </fieldset>
+        <br />
+        <a href="#" ng-click="showList()">Back to list</a>
+    </div>
+</div>

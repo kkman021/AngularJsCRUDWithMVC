@@ -34,82 +34,10 @@
   </item>
   <item>
     <id>5</id>
-    <customer>dsf</customer>
-    <JobType>2</JobType>
-    <date>2014/7/2</date>
-    <description>dsf</description>
-    <hours>2</hours>
-  </item>
-  <item>
-    <id>6</id>
-    <customer>fsd</customer>
-    <JobType>2</JobType>
-    <date>2014/7/2</date>
-    <description>df</description>
-    <hours>0</hours>
-  </item>
-  <item>
-    <id>7</id>
-    <customer>dsf</customer>
-    <JobType>2</JobType>
-    <date>2014/7/2</date>
-    <description>df</description>
-    <hours>2</hours>
-  </item>
-  <item>
-    <id>8</id>
-    <customer>df</customer>
-    <JobType>2</JobType>
-    <date>2014/7/2</date>
-    <description>sdf</description>
-    <hours>2</hours>
-  </item>
-  <item>
-    <id>9</id>
-    <customer>dsfds</customer>
-    <JobType>3</JobType>
-    <date>2014/7/2</date>
-    <description>df</description>
-    <hours>0</hours>
-  </item>
-  <item>
-    <id>10</id>
-    <customer>dsfds</customer>
-    <JobType>3</JobType>
-    <date>2014/7/2</date>
-    <description>df</description>
-    <hours>2</hours>
-  </item>
-  <item>
-    <id>11</id>
-    <customer>dsf</customer>
-    <JobType>1</JobType>
-    <date>2014/7/2</date>
-    <description>dfs</description>
-    <hours>0</hours>
-  </item>
-  <item>
-    <id>12</id>
-    <customer>dsf</customer>
-    <JobType>1</JobType>
-    <date>2014/7/2</date>
-    <description>dfs</description>
-    <hours>0</hours>
-  </item>
-  <item>
-    <id>13</id>
     <customer>sdf</customer>
     <JobType>2</JobType>
-    <date>2014/7/2</date>
+    <date>2014/7/3</date>
     <description>dsf</description>
     <hours>2</hours>
-  </item>
-  <item>
-    <id>14</id>
-    <customer>T1</customer>
-    <JobType>2</JobType>
-    <date>2014/7/2</date>
-    <description>df</description>
-    <hours>1</hours>
   </item>
 </billing>
