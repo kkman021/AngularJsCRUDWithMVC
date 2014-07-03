@@ -4,15 +4,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CRUD_XML_MVC.Models;
+using Newtonsoft.Json;
 
 namespace CRUD_XML_MVC.Controllers
 {
     public class BillingController : Controller
     {
         private IBillingRepository _repository;
-        private SelectList typeList = new SelectList(new[]{"Meeting","Requirements","Development","Testing","Documentation"});
+        private SelectList typeList = new SelectList(new[] { "Meeting", "Requirements", "Development", "Testing", "Documentation" });
 
-        public BillingController(): this(new BillingRepository())
+        public BillingController()
+            : this(new BillingRepository())
         {
         }
 
@@ -28,15 +30,9 @@ namespace CRUD_XML_MVC.Controllers
         }
 
         [HttpGet]
-        public JsonResult ListBillings()
+        public string ListBillings()
         {
-            return Json(_repository.GetBillings(),JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpGet]
-        public JsonResult GetDetails(int id)
-        {
-            return Json(_repository.GetBillingByID(id), JsonRequestBehavior.AllowGet);
+            return JsonConvert.SerializeObject(_repository.GetBillings());
         }
 
         [HttpGet]
@@ -53,6 +49,13 @@ namespace CRUD_XML_MVC.Controllers
         }
 
         [HttpPost]
+        public string DeleteMode(int id)
+        {
+            _repository.DeleteBilling(id);
+            return "OK";
+        }
+
+        [HttpPost]
         public string EditMode(Billing billing)
         {
             try
@@ -60,13 +63,14 @@ namespace CRUD_XML_MVC.Controllers
                 _repository.EditBilling(billing);
                 return "OK";
             }
-            catch {
+            catch
+            {
                 return "Fail";
             }
         }
 
         public ActionResult Details(int id)
-        {            
+        {
             Billing billing = _repository.GetBillingByID(id);
             if (billing == null)
                 return RedirectToAction("Index");
@@ -81,7 +85,7 @@ namespace CRUD_XML_MVC.Controllers
             return View();
         }
 
-       
+
 
 
         [HttpPost]
@@ -94,7 +98,7 @@ namespace CRUD_XML_MVC.Controllers
                     _repository.InsertBilling(billing);
                     return RedirectToAction("Index");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     //error msg for failed insert in XML file
                     ModelState.AddModelError("", "Error creating record. " + ex.Message);
@@ -104,7 +108,7 @@ namespace CRUD_XML_MVC.Controllers
             return View(billing);
         }
 
- 
+
         public ActionResult Edit(int id)
         {
             Billing billing = _repository.GetBillingByID(id);
@@ -136,7 +140,7 @@ namespace CRUD_XML_MVC.Controllers
             return View(billing);
         }
 
- 
+
         public ActionResult Delete(int id)
         {
             Billing billing = _repository.GetBillingByID(id);
@@ -154,7 +158,7 @@ namespace CRUD_XML_MVC.Controllers
                 _repository.DeleteBilling(id);
                 return RedirectToAction("Index");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //error msg for failed delete in XML file
                 ViewBag.ErrorMsg = "Error deleting record. " + ex.Message;

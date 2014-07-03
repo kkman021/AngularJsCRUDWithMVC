@@ -23,9 +23,34 @@ BillingApp.controller('BillingCtrl', function ($scope, $http, $window) {
         });
     };
 
-    $scope.showDetail = function (Billing) {
+    $scope.edit = function (BillingDetail) {
+        $http.post('/Billing/EditMode/', BillingDetail).success(function (data) {
+            if (data == "OK") {
+                $scope.ShowMode = 'list';
+            }
+        });
+    };
+
+    $scope.GoDel = function (ID) {
+        var retVal = confirm("確定刪除？");
+        if (retVal == true) {
+            var PostData = { "ID": ID };
+            $http.post('/Billing/DeleteMode/', PostData).success(function (data) {
+                if (data == "OK") {
+                    $scope.InitData();
+                }
+            }).error(function (data, status, headers, config) {
+                alert("Error");
+            });
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    $scope.showDetail = function (Billing, ShowMode) {
         $scope.BillingDetail = Billing;
-        $scope.ShowMode = 'details';
+        $scope.ShowMode = ShowMode;
     }
 
     $scope.showList = function () {
@@ -40,4 +65,3 @@ BillingApp.controller('BillingCtrl', function ($scope, $http, $window) {
         $scope.friends.splice(index, 1);
     };
 });
-

@@ -19,7 +19,7 @@ namespace CRUD_XML_MVC.Models
             billingData = XDocument.Load(HttpContext.Current.Server.MapPath("~/App_Data/Billings.xml"));
             var billings = from billing in billingData.Descendants("item")
                             select new Billing((int)billing.Element("id"), billing.Element("customer").Value,
-                            billing.Element("JobType").Value, (DateTime)billing.Element("date"),
+                            (int)billing.Element("JobType"), (DateTime)billing.Element("date"),
                             billing.Element("description").Value, (int)billing.Element("hours"));
             allBillings.AddRange(billings.ToList<Billing>());
         }

@@ -69,3 +69,5 @@ D:\TestProject\AngularJsCRUDWithMVC\MVC3_CRUD_XML\bin\zh-Hant\System.Web.WebPage
 D:\TestProject\AngularJsCRUDWithMVC\MVC3_CRUD_XML\obj\Debug\MVC3_CRUD_XML.csprojResolveAssemblyReference.cache
 D:\TestProject\AngularJsCRUDWithMVC\MVC3_CRUD_XML\obj\Debug\MVC3_CRUD_XML.dll
 D:\TestProject\AngularJsCRUDWithMVC\MVC3_CRUD_XML\obj\Debug\MVC3_CRUD_XML.pdb
+D:\TestProject\AngularJsCRUDWithMVC\MVC3_CRUD_XML\bin\Newtonsoft.Json.dll
+D:\TestProject\AngularJsCRUDWithMVC\MVC3_CRUD_XML\bin\Newtonsoft.Json.xml
