@@ -1,19 +1,42 @@
-﻿var BillingApp = angular.module('BillingApp', []);
+﻿var BillingApp = angular.module('BillingApp', ['ui.bootstrap']);
 
 BillingApp.controller('BillingCtrl', function ($scope, $http, $window) {
 
+    $scope.pagingInfo = {
+        Currentpage: 1,
+        itemsPerPage: 2,
+        sortBy: 'Customer',
+        reverse: false,
+        searchName: '',
+        totalItems: 0
+    };
+
+    $scope.pageChanged = function () {
+        $scope.InitData();
+    };
+
+    //功能顯示控制
     $scope.ShowMode = 'list';
 
+    //取得工作列表
     $http.get('/Billing/ListJobType').success(function (data) {
         $scope.JobTypes = data;
     });
 
-    $scope.InitData = function () {
-        $http.get('/Billing/ListBillings/').success(function (data) {
-            $scope.Billings = data;
+    //取得資料
+    $scope.InitData = function () {        
+        $http.get('/Billing/ListBillings/', { params: $scope.pagingInfo }).success(function (data) {
+            $scope.Billings = data.data;
+            $scope.pagingInfo.totalItems = data.count;
         });
     }
 
+    $scope.searchMode = function () {
+        $scope.pagingInfo.Currentpage = 1;
+        $scope.InitData();
+    }
+
+    //新增
     $scope.add = function () {
         var billing = { "Customer": $scope.ICustomer, "JobType": $scope.IJobType.id, "Date": $scope.IDate, "Description": $scope.IDescription, "Hours": $scope.IHours };
         $http.post('/Billing/Add/', billing).success(function (data) {
@@ -23,6 +46,7 @@ BillingApp.controller('BillingCtrl', function ($scope, $http, $window) {
         });
     };
 
+    //修改
     $scope.edit = function (BillingDetail) {
         $http.post('/Billing/EditMode/', BillingDetail).success(function (data) {
             if (data == "OK") {
@@ -31,6 +55,7 @@ BillingApp.controller('BillingCtrl', function ($scope, $http, $window) {
         });
     };
 
+    //刪除
     $scope.GoDel = function (ID) {
         var retVal = confirm("確定刪除？");
         if (retVal == true) {
@@ -48,6 +73,7 @@ BillingApp.controller('BillingCtrl', function ($scope, $http, $window) {
         }
     }
 
+    //顯示明細
     $scope.showDetail = function (Billing, ShowMode) {
         $scope.BillingDetail = Billing;
         $scope.ShowMode = ShowMode;
@@ -57,11 +83,19 @@ BillingApp.controller('BillingCtrl', function ($scope, $http, $window) {
         $scope.ShowMode = 'list';
     };
 
-    $scope.update = function () {
-        alert('OK');
-    };
 
-    $scope.remove = function (index) {
-        $scope.friends.splice(index, 1);
+
+    //日期設定
+    $scope.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+    };
+    $scope.format = "yyyy-MM-dd";
+
+    $scope.open = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.opened = true;
     };
 });

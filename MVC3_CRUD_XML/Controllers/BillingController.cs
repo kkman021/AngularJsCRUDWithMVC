@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Web;
 using System.Web.Mvc;
 using CRUD_XML_MVC.Models;
@@ -30,9 +31,28 @@ namespace CRUD_XML_MVC.Controllers
         }
 
         [HttpGet]
-        public string ListBillings()
+        public string ListBillings(int Currentpage = 1, int itemsPerPage = 1, string sortBy = "Customer", bool reverse = false, string searchName = null)
         {
-            return JsonConvert.SerializeObject(_repository.GetBillings());
+            var Bills = _repository.GetBillings();
+
+            if (!string.IsNullOrWhiteSpace(searchName))
+            {
+                searchName = searchName.ToLower();
+                Bills = Bills.Where(x =>
+                    x.Customer.ToLower().Contains(searchName));
+            }
+
+            Bills = Bills.AsQueryable().OrderBy(sortBy + (reverse ? " descending" : ""));
+            var ToTalCount = Bills.Count();
+            // paging
+            Bills = Bills.Skip((Currentpage - 1) * itemsPerPage).Take(itemsPerPage);
+
+            var json = new
+            {
+                count = ToTalCount,
+                data = Bills
+            };
+            return JsonConvert.SerializeObject(json);
         }
 
         [HttpGet]

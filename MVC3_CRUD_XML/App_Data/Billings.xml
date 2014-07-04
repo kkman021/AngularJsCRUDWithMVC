@@ -16,4 +16,20 @@
     <description>TESS</description>
     <hours>4</hours>
   </item>
+  <item>
+    <id>6</id>
+    <customer>MIng</customer>
+    <JobType>5</JobType>
+    <date>2014/2/1</date>
+    <description>dsfdf</description>
+    <hours>2</hours>
+  </item>
+  <item>
+    <id>7</id>
+    <customer>dsfdsf</customer>
+    <JobType>2</JobType>
+    <date>2014/7/9</date>
+    <description>dsfdsf</description>
+    <hours>2</hours>
+  </item>
 </billing>

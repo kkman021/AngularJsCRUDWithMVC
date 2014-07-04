@@ -3,7 +3,9 @@
     ViewBag.Title = "Index";
 }
 <script type="text/javascript" src="@Url.Content("~/Scripts/Billing/Billing.js")"></script>
-<script type="text/javascript" src="https://rawgit.com/betsol/angular-input-date/master/src/angular-input-date.js"></script>
+<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js" type="text/javascript"></script>
+<link href="@Url.Content("~/Content/pagination.css")" rel="stylesheet">
+<link href="@Url.Content("~/content/datepicker.css")" rel="Stylesheet" />
 <h2>
     Index</h2>
 <p>
@@ -11,6 +13,16 @@
 </p>
 <div ng-app="BillingApp" ng-controller="BillingCtrl" ng-switch="ShowMode" ng-init="InitData()">
     <div ng-switch-when="list">
+        <fieldset>
+            <legend>Searching</legend>
+            <div class="editor-label">
+                姓名：</div>
+            <div class="editor-field">
+                <input type="text" ng-model="pagingInfo.searchName" />
+            </div>
+            <button class="btn" ng-click="searchMode()">
+                search</button>
+        </fieldset>
         <table>
             <tr>
                 <th>
@@ -54,6 +66,9 @@
                 </td>
             </tr>
         </table>
+        <pagination boundary-links="true" total-items="pagingInfo.totalItems" ng-model="pagingInfo.Currentpage"
+            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;"
+            last-text="&raquo;" items-per-page="pagingInfo.itemsPerPage" ng-change="pageChanged()"></pagination>
     </div>
     <div ng-switch-when="details">
         <fieldset>
@@ -101,8 +116,8 @@
             <div class="editor-label">
                 JobType
             </div>
-            <div class="editor-field">          
-                <!-- 當ng-model 的型態 需與 要綁定的資料型態一致，以這裡來說 若Job.id型態為int 則 BillingDetail.JobType 型態也必須為int ，否則無法綁定-->  
+            <div class="editor-field">
+                <!-- 當ng-model 的型態 需與 要綁定的資料型態一致，以這裡來說 若Job.id型態為int 則 BillingDetail.JobType 型態也必須為int ，否則無法綁定-->
                 <select ng-model="BillingDetail.JobType" ng-options="Job.id as Job.name for Job in JobTypes">
                 </select>
             </div>
@@ -110,7 +125,7 @@
                 Date
             </div>
             <div class="editor-field">
-                <input type="text" ng-model="BillingDetail.Date"/>
+                <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="BillingDetail.Date" is-open="opened" datepicker-options="dateOptions" close-text="Close" ng-click="open($event)"/>                
             </div>
             <div class="editor-label">
                 Description
