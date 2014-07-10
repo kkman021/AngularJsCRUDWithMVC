@@ -17,19 +17,51 @@
     <hours>4</hours>
   </item>
   <item>
-    <id>6</id>
-    <customer>MIng</customer>
+    <id>8</id>
+    <customer>ST</customer>
     <JobType>5</JobType>
-    <date>2014/2/1</date>
-    <description>dsfdf</description>
+    <date>2014/7/10</date>
+    <description>No</description>
     <hours>2</hours>
   </item>
   <item>
-    <id>7</id>
-    <customer>dsfdsf</customer>
+    <id>9</id>
+    <customer>T1</customer>
     <JobType>2</JobType>
-    <date>2014/7/9</date>
-    <description>dsfdsf</description>
+    <date>2014/7/1</date>
+    <description>No</description>
     <hours>2</hours>
+  </item>
+  <item>
+    <id>10</id>
+    <customer>T2</customer>
+    <JobType>3</JobType>
+    <date>2014/7/2</date>
+    <description>T2</description>
+    <hours>3</hours>
+  </item>
+  <item>
+    <id>11</id>
+    <customer>T3</customer>
+    <JobType>3</JobType>
+    <date>2014/7/3</date>
+    <description>T3</description>
+    <hours>3</hours>
+  </item>
+  <item>
+    <id>12</id>
+    <customer>T4</customer>
+    <JobType>2</JobType>
+    <date>2014/7/4</date>
+    <description>T4</description>
+    <hours>0</hours>
+  </item>
+  <item>
+    <id>13</id>
+    <customer>T5</customer>
+    <JobType>4</JobType>
+    <date>2014/7/5</date>
+    <description>T5</description>
+    <hours>5</hours>
   </item>
 </billing>
