@@ -103,9 +103,9 @@ BillingApp.controller('BillingCtrl', function ($scope, $http, $window, $filter) 
     }
 
     //顯示明細
-    $scope.showDetail = function (Billing) {
+    $scope.showDetail = function (Billing,ShowMode) {
         $scope.BillingDetail = Billing;
-        $scope.ShowMode = 'details';
+        $scope.ShowMode = ShowMode;
     }
 
     $scope.showList = function () {

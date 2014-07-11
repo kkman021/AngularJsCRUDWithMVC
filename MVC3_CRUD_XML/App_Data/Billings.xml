@@ -64,4 +64,12 @@
     <description>T5</description>
     <hours>5</hours>
   </item>
+  <item>
+    <id>14</id>
+    <customer>dsf</customer>
+    <JobType>1</JobType>
+    <date>2014/7/1</date>
+    <description>dsfdsf</description>
+    <hours>1</hours>
+  </item>
 </billing>
