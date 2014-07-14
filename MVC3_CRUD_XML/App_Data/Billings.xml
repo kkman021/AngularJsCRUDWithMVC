@@ -70,6 +70,38 @@
     <JobType>1</JobType>
     <date>2014/7/1</date>
     <description>dsfdsf</description>
-    <hours>1</hours>
+    <hours>3</hours>
+  </item>
+  <item>
+    <id>15</id>
+    <customer>洋</customer>
+    <JobType>2</JobType>
+    <date>2014/6/30</date>
+    <description>sdf</description>
+    <hours>2</hours>
+  </item>
+  <item>
+    <id>16</id>
+    <customer>洋</customer>
+    <JobType>1</JobType>
+    <date>2014/7/1</date>
+    <description />
+    <hours>2</hours>
+  </item>
+  <item>
+    <id>18</id>
+    <customer>洋洋洋洋洋洋</customer>
+    <JobType>2</JobType>
+    <date>2014/6/30</date>
+    <description />
+    <hours>45</hours>
+  </item>
+  <item>
+    <id>19</id>
+    <customer>洋洋洋洋洋洋</customer>
+    <JobType>3</JobType>
+    <date>2014/7/2</date>
+    <description />
+    <hours>22</hours>
   </item>
 </billing>

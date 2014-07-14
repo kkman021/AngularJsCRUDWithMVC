@@ -6,9 +6,23 @@ using System.Web;
 using System.Web.Mvc;
 using CRUD_XML_MVC.Models;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
+using System.Linq.Expressions;
 
 namespace CRUD_XML_MVC.Controllers
 {
+    class ErrorModel
+    {
+        /// <summary>
+        /// Form 裡的input的Name
+        /// </summary>
+        public string key { get; set; }
+        /// <summary>
+        /// 該input的錯誤訊息
+        /// </summary>
+        public string value { get; set; }
+    }
+
     public class BillingController : Controller
     {
         private IBillingRepository _repository;
@@ -31,7 +45,7 @@ namespace CRUD_XML_MVC.Controllers
         }
 
         [HttpGet]
-        public string ListBillings(int Currentpage = 1, int itemsPerPage = 1, string sortBy = "Customer", bool reverse = false, string searchName = null)
+        public string ListBillings(int Currentpage = 1, int itemsPerPage = 1, string sortBy = "Hours", bool reverse = false, string searchName = null)
         {
             var Bills = _repository.GetBillings();
 
@@ -64,8 +78,29 @@ namespace CRUD_XML_MVC.Controllers
         [HttpPost]
         public string Add(Billing billing)
         {
+            List<ErrorModel> oErrorList = new List<ErrorModel>();
+            //為了運用強型別避免打錯字之類的錯誤，所以，Key一律用PropertyName。
+            if (billing.Customer.Length < 5)
+                oErrorList.Add(new ErrorModel { key = GetPropertyName<Billing>(x => x.Customer), value = "名字太短（5個字以上)" });
+            if (billing.Hours < 20)
+                oErrorList.Add(new ErrorModel { key = GetPropertyName<Billing>(x => x.Hours), value = "時數太短(20小時以上）" });
+
+            if (oErrorList.Count > 0)
+                return JsonConvert.SerializeObject(oErrorList);
+
+            
             _repository.InsertBilling(billing);
             return "OK";
+        }
+
+        public static string GetPropertyName<T>(Expression<Func<T, object>> expression)
+        {
+            var body = expression.Body as MemberExpression;
+
+            if (body == null)
+                body = ((UnaryExpression)expression.Body).Operand as MemberExpression;
+
+            return body.Member.Name;
         }
 
         [HttpPost]

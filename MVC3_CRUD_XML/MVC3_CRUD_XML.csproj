@@ -99,8 +99,9 @@
     <Content Include="Content\pagination.css" />
     <Content Include="Content\datePicker.css" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\Billing\BillingController.js" />
-    <Content Include="Scripts\Billing\BillingModel.js" />
+    <Content Include="Scripts\Controller\BillingController.js" />
+    <Content Include="Scripts\Directive\BillingDirective.js" />
+    <Content Include="Scripts\Factory\BillingFactory.js" />
     <Content Include="Scripts\ui-bootstrap-0.11.0.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

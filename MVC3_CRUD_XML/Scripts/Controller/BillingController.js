@@ -1,25 +1,5 @@
 ﻿var BillingApp = angular.module('BillingApp', ['ui.bootstrap']);
 
-BillingApp.factory('BillingRepository', function ($http) {
-    return {
-        lookupBilling: function (callback, oPageInfo) {
-            $http.get('/Billing/ListBillings/', { params: oPageInfo }).success(callback);
-        },
-        insertBilling: function (callback, oBillingModel) {
-            $http.post('/Billing/Add/', oBillingModel).success(callback);
-        },
-        updateBilling: function (callback, oBillingModel) {
-            $http.post('/Billing/EditMode/', oBillingModel).success(callback);
-        },
-        deleteBilling: function (callback, oPostData) {
-            $http.post('/Billing/DeleteMode/', oPostData).success(callback);
-        },
-        lookupJobList: function (callback) {
-            $http.get('/Billing/ListJobType').success(callback);
-        }
-    }
-});
-
 BillingApp.controller('BillingCtrl', function ($scope, $http, $window, $filter, BillingRepository) {
     //取得工作列表
     BillingRepository.lookupJobList(function (results) {
@@ -101,6 +81,9 @@ BillingApp.controller('BillingCtrl', function ($scope, $http, $window, $filter, 
                 alert("建檔成功！");
                 $window.location.href = "/";
             }
+            else
+                $scope.errors = results;
+            //[{"key":"Customer","value":"名字太短"},{"key":"Hours","value":"時數太短"}]
         }, $scope.BillingModel);
 
         //        $http.post('/Billing/Add/', $scope.BillingModel).success(function (data) {
