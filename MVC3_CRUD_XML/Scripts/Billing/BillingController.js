@@ -1,17 +1,40 @@
 ﻿var BillingApp = angular.module('BillingApp', ['ui.bootstrap']);
 
-BillingApp.controller('BillingCtrl', function ($scope, $http, $window, $filter) {
+BillingApp.factory('BillingRepository', function ($http) {
+    return {
+        lookupBilling: function (callback, oPageInfo) {
+            $http.get('/Billing/ListBillings/', { params: oPageInfo }).success(callback);
+        },
+        insertBilling: function (callback, oBillingModel) {
+            $http.post('/Billing/Add/', oBillingModel).success(callback);
+        },
+        updateBilling: function (callback, oBillingModel) {
+            $http.post('/Billing/EditMode/', oBillingModel).success(callback);
+        },
+        deleteBilling: function (callback, oPostData) {
+            $http.post('/Billing/DeleteMode/', oPostData).success(callback);
+        },
+        lookupJobList: function (callback) {
+            $http.get('/Billing/ListJobType').success(callback);
+        }
+    }
+});
+
+BillingApp.controller('BillingCtrl', function ($scope, $http, $window, $filter, BillingRepository) {
     //取得工作列表
-    $http.get('/Billing/ListJobType').success(function (data) {
-        $scope.JobTypes = data;
+    BillingRepository.lookupJobList(function (results) {
+        $scope.JobTypes = results;
     });
+    //    $http.get('/Billing/ListJobType').success(function (data) {
+    //        $scope.JobTypes = data;
+    //    });
 
     //初始化pager控件 & 將搜尋條件也放在此object
     $scope.pagingInfo = {
         Currentpage: 1,
         itemsPerPage: 5,
-        sortBy: 'Customer',
-        reverse: false,
+        sortBy: 'id',
+        reverse: true,
         searchName: '',
         totalItems: 0
     };
@@ -20,7 +43,7 @@ BillingApp.controller('BillingCtrl', function ($scope, $http, $window, $filter) 
     function MappingJsonToModel(JsonData) {
         var ModelList = [];
         for (var i = 0; i < JsonData.length; i++) {
-            ModelList[i] = new BillingModel(JsonData[i].ID, JsonData[i].Customer, JsonData[i].JobType, JsonData[i].Date, JsonData[i].Description, JsonData[i].Hours);            
+            ModelList[i] = new BillingModel(JsonData[i].ID, JsonData[i].Customer, JsonData[i].JobType, JsonData[i].Date, JsonData[i].Description, JsonData[i].Hours);
         }
         return ModelList;
     }
@@ -40,10 +63,15 @@ BillingApp.controller('BillingCtrl', function ($scope, $http, $window, $filter) 
 
     //取得清單
     $scope.InitData = function () {
-        $http.get('/Billing/ListBillings/', { params: $scope.pagingInfo }).success(function (data) {
-            $scope.Billings = new MappingJsonToModel(data.data);
-            $scope.pagingInfo.totalItems = data.count;
-        });
+        BillingRepository.lookupBilling(function (results) {
+            $scope.Billings = new MappingJsonToModel(results.data);
+            $scope.pagingInfo.totalItems = results.count;
+        }, $scope.pagingInfo);
+
+        //        $http.get('/Billing/ListBillings/', { params: $scope.pagingInfo }).success(function (data) {
+        //            $scope.Billings = new MappingJsonToModel(data.data);
+        //            $scope.pagingInfo.totalItems = data.count;
+        //        });
     }
 
     //頁面切換
@@ -67,35 +95,52 @@ BillingApp.controller('BillingCtrl', function ($scope, $http, $window, $filter) 
     }
 
     //新增
-    $scope.add = function () {        
-        $http.post('/Billing/Add/', $scope.BillingModel).success(function (data) {
-            if (data == "OK") {
+    $scope.add = function () {
+        BillingRepository.insertBilling(function (results) {
+            if (results == "OK") {
+                alert("建檔成功！");
                 $window.location.href = "/";
             }
-        });
+        }, $scope.BillingModel);
+
+        //        $http.post('/Billing/Add/', $scope.BillingModel).success(function (data) {
+        //            if (data == "OK") {
+        //                $window.location.href = "/";
+        //            }
+        //        });
     };
 
     //修改
     $scope.edit = function (BillingDetail) {
-        $http.post('/Billing/EditMode/', BillingDetail).success(function (data) {
-            if (data == "OK") {
-                $scope.ShowMode = 'list';
+        BillingRepository.updateBilling(function (results) {
+            if (results == "OK") {
+                alert("修改成功！");
+                $window.location.href = "/";
             }
-        });
+        }, BillingDetail);
+
+        //        $http.post('/Billing/EditMode/', BillingDetail).success(function (data) {
+        //            if (data == "OK") {
+        //                $scope.ShowMode = 'list';
+        //            }
+        //        });
     };
 
     //刪除
     $scope.GoDel = function (ID) {
         var retVal = confirm("確定刪除？");
         if (retVal == true) {
-            var PostData = { "ID": ID };
-            $http.post('/Billing/DeleteMode/', PostData).success(function (data) {
-                if (data == "OK") {
-                    $scope.InitData();
+            BillingRepository.deleteBilling(function (results) {
+                if (results == "OK") {
+                    alert("刪除成功！");
+                    $window.location.href = "/";
                 }
-            }).error(function (data, status, headers, config) {
-                alert("Error");
-            });
+            }, { "ID": ID });
+            //            $http.post('/Billing/DeleteMode/', PostData).success(function (data) {
+            //                if (data == "OK") {
+            //                    $scope.InitData();
+            //                }
+            //            })
             return true;
         } else {
             return false;
@@ -103,7 +148,7 @@ BillingApp.controller('BillingCtrl', function ($scope, $http, $window, $filter) 
     }
 
     //顯示明細
-    $scope.showDetail = function (Billing,ShowMode) {
+    $scope.showDetail = function (Billing, ShowMode) {
         $scope.BillingDetail = Billing;
         $scope.ShowMode = ShowMode;
     }
