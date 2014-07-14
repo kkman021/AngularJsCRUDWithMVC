@@ -37,7 +37,7 @@
         @Html.LabelFor(model => model.Date)
     </div>
     <div class="editor-field">
-        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="BillingModel.Date" required
+        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="BillingModel.Date"
             is-open="opened" datepicker-options="dateOptions" close-text="Close" ng-click="open($event)" name="Date"/>
         <span ng-show="myForm.Date.$error.required">必填</span>
     </div>
@@ -46,6 +46,8 @@
     </div>
     <div class="editor-field">
         <input type="text" ng-model="BillingModel.Description">
+        <span ng-show="myForm.$serverError.Description.$invalid" ng-bind="myForm.$serverError.Description.message"></span>
+
     </div>
     <div class="editor-label">
         @Html.LabelFor(model => model.Hours)

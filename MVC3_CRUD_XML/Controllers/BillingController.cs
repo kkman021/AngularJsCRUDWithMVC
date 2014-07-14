@@ -79,6 +79,20 @@ namespace CRUD_XML_MVC.Controllers
         public string Add(Billing billing)
         {
             List<ErrorModel> oErrorList = new List<ErrorModel>();
+            //一般Model驗證
+            if (!this.ModelState.IsValid)
+            {
+                foreach (var modelError in ModelState)
+                {
+                    string propertyName = modelError.Key;
+                    if (modelError.Value.Errors.Count > 0)
+                    {
+                        //暫時只抓第一個錯誤,可改成列出所有錯誤
+                        oErrorList.Add(new ErrorModel { key = propertyName, value = modelError.Value.Errors[0].ErrorMessage });
+                    }
+                }
+            }
+            //額外特殊驗證
             //為了運用強型別避免打錯字之類的錯誤，所以，Key一律用PropertyName。
             if (billing.Customer.Length < 5)
                 oErrorList.Add(new ErrorModel { key = GetPropertyName<Billing>(x => x.Customer), value = "名字太短（5個字以上)" });

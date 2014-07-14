@@ -29,13 +29,15 @@ namespace CRUD_XML_MVC.Models
         }
 
         public int ID { get; set; }
-        [Required(ErrorMessage = "Customer is required")]
+        [Required(ErrorMessage = "Customer is required")]        
         public string Customer { get; set; }
         [Required(ErrorMessage = "Type is required")]
         public int JobType { get; set; }
         [Required(ErrorMessage = "Date is required")]
         public DateTime Date { get; set; }
-        [Required(ErrorMessage = "Description is required")]
+        [Required(ErrorMessage = "備註必填")]
+        [StringLength(10, ErrorMessage = "備註長度不可超過10。")]
+        [RegularExpression(@"^[\（\）\(\)\u4e00-\u9fa5]*$", ErrorMessage = "備註限輸入中文。")]
         public string Description { get; set; }
         [Required(ErrorMessage = "Hours is required")]
         public int Hours { get; set; }
