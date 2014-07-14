@@ -9,21 +9,30 @@
 <script type="text/javascript" src="@Url.Content("~/Scripts/Directive/BillingDirective.js")"></script>
 <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js" type="text/javascript"></script>
 <link href="@Url.Content("~/content/datepicker.css")" rel="Stylesheet" />
+<style type="text/css">
+    .Error
+    {
+        border: 1px solid red;
+        color: Red;
+    }
+</style>
 <!-- 當submit時若myForm.$valid 才執行add() 註冊ServerSid的directive -->
-<form name="myForm" ng-submit="myForm.$valid && add()" ng-app="BillingApp" ng-controller="BillingCtrl" novalidate server-validate="errors">
-<fieldset >
+<form name="myForm" ng-submit="myForm.$valid && add()" ng-app="BillingApp" ng-controller="BillingCtrl"
+novalidate server-validate="errors">
+<fieldset>
     <legend>Billing</legend>
     <div class="editor-label">
         @Html.LabelFor(model => model.Customer)
     </div>
     <div class="editor-field">
         <!-- 當onfocus時，先將ServerSide的驗證設定為Pass，才不會一直看到錯誤訊息 -->
-        <input type="text" ng-model="BillingModel.Customer" required name="Customer" ng-pattern="/^[\（\）\(\)\u4e00-\u9fa5]*$/" 
-            ng-focus="myForm.$serverError.Customer.$invalid=false;">        
-        <span ng-show="myForm.Customer.$error.required">必填</span>
-        <span ng-show="myForm.Customer.$error.pattern">限輸入中文。</span>
+        <input type="text" ng-model="BillingModel.Customer" required name="Customer" ng-pattern="/^[\（\）\(\)\u4e00-\u9fa5]*$/"
+            ng-focus="myForm.$serverError.Customer.$invalid=false;">
+        <span ng-show="submitted && myForm.Customer.$error.required" class="Error">必填</span> <span ng-show="submitted && myForm.Customer.$error.pattern"
+            class="Error">限輸入中文。</span>
         <!-- 透過ServerSid的directive 做資料驗證-->
-        <span ng-show="myForm.$serverError.Customer.$invalid" ng-bind="myForm.$serverError.Customer.message"></span>
+        <span ng-show="myForm.$serverError.Customer.$invalid" ng-bind="myForm.$serverError.Customer.message"
+            class="Error"></span>
     </div>
     <div class="editor-label">
         @Html.LabelFor(model => model.JobType)
@@ -38,29 +47,29 @@
     </div>
     <div class="editor-field">
         <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="BillingModel.Date"
-            is-open="opened" datepicker-options="dateOptions" close-text="Close" ng-click="open($event)" name="Date"/>
-        <span ng-show="myForm.Date.$error.required">必填</span>
+            is-open="opened" datepicker-options="dateOptions" close-text="Close" ng-click="open($event)"
+            name="Date" />        
     </div>
     <div class="editor-label">
         @Html.LabelFor(model => model.Description)
     </div>
     <div class="editor-field">
-        <input type="text" ng-model="BillingModel.Description">
-        <span ng-show="myForm.$serverError.Description.$invalid" ng-bind="myForm.$serverError.Description.message"></span>
-
+        <input type="text" ng-model="BillingModel.Description" ng-focus="myForm.$serverError.Description.$invalid=false;">
+        <span ng-show="myForm.$serverError.Description.$invalid" ng-bind="myForm.$serverError.Description.message" class="Error">
+        </span>
     </div>
     <div class="editor-label">
         @Html.LabelFor(model => model.Hours)
     </div>
     <div class="editor-field">
-        <input type="text" ng-model="BillingModel.Hours" required ng-pattern="/^\d+$/" name="Hours">
-        <span ng-show="myForm.Hours.$error.required">必填</span>
-        <span ng-show="myForm.Hours.$error.pattern">限輸入數字</span>
-        <span ng-show="myForm.$serverError.Hours.$invalid" ng-bind="myForm.$serverError.Hours.message"></span>
+        <input type="text" ng-model="BillingModel.Hours" required ng-pattern="/^\d+$/" name="Hours" ng-focus="myForm.$serverError.Hours.$invalid=false;">
+        <span ng-show="submitted && myForm.Hours.$error.required">必填</span> <span ng-show="submitted && myForm.Hours.$error.pattern" class="Error">
+            限輸入數字</span> <span ng-show="myForm.$serverError.Hours.$invalid" ng-bind="myForm.$serverError.Hours.message" class="Error">
+            </span>
     </div>
     <div>
         @*<input type="submit" value="新增" ng-click="submitted=true" ng-disabled="myForm.$invalid">*@
-        <input type="submit" value="新增" ng-disabled="myForm.$invalid">
+        <input type="submit" value="新增" ng-click="submitted=true">
     </div>
 </fieldset>
 </form>
